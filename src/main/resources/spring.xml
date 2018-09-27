@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- 开启MVC注解功能 -->
+	<mvc:annotation-driven />
+	<!-- end MVC -->
+	
+	
+	<!-- Mybatis 与 Spring 整合 -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/lol_online?useUnicode=true&amp;characterEncoding=utf8&amp;useSSL=false" />
+		<property name="username" value="root" />
+		<property name="password" value="zzh14318450" />
+	</bean>
+	
+	
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:mybatis.xml"></property>
+		<property name="mapperLocations"
+			value="classpath*:zzh/PeopleListOnline/mapper/xml/*.xml" />
+	</bean>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="zzh.PeopleListOnline.mapper" />
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+	
+	
+	<!-- 自动包扫描 -->
+	<context:component-scan base-package="zzh.PeopleListOnline.controller"></context:component-scan>
+	<context:component-scan base-package="zzh.PeopleListOnline.service.impl"></context:component-scan>
+	<!-- end 自动包扫描 -->
+	
+	
+	
+</beans>

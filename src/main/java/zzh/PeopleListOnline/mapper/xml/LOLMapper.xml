@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zzh.PeopleListOnline.mapper.LOLMapper">
+  <resultMap id="BaseResultMap" type="zzh.PeopleListOnline.model.LOL">
+    <id column="lol_id" jdbcType="VARCHAR" property="lolId" />
+    <result column="lol_name" jdbcType="VARCHAR" property="lolName" />
+    <result column="lol_distrct" jdbcType="VARCHAR" property="lolDistrct" />
+    <result column="lol_rank" jdbcType="VARCHAR" property="lolRank" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    lol_id, lol_name, lol_distrct, lol_rank
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from lol
+    where lol_id = #{lolId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from lol
+    where lol_id = #{lolId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="zzh.PeopleListOnline.model.LOL">
+    insert into lol (lol_id, lol_name, lol_distrct, 
+      lol_rank)
+    values (#{lolId,jdbcType=VARCHAR}, #{lolName,jdbcType=VARCHAR}, #{lolDistrct,jdbcType=VARCHAR}, 
+      #{lolRank,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="zzh.PeopleListOnline.model.LOL">
+    insert into lol
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lolId != null">
+        lol_id,
+      </if>
+      <if test="lolName != null">
+        lol_name,
+      </if>
+      <if test="lolDistrct != null">
+        lol_distrct,
+      </if>
+      <if test="lolRank != null">
+        lol_rank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lolId != null">
+        #{lolId,jdbcType=VARCHAR},
+      </if>
+      <if test="lolName != null">
+        #{lolName,jdbcType=VARCHAR},
+      </if>
+      <if test="lolDistrct != null">
+        #{lolDistrct,jdbcType=VARCHAR},
+      </if>
+      <if test="lolRank != null">
+        #{lolRank,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="zzh.PeopleListOnline.model.LOL">
+    update lol
+    <set>
+      <if test="lolName != null">
+        lol_name = #{lolName,jdbcType=VARCHAR},
+      </if>
+      <if test="lolDistrct != null">
+        lol_distrct = #{lolDistrct,jdbcType=VARCHAR},
+      </if>
+      <if test="lolRank != null">
+        lol_rank = #{lolRank,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where lol_id = #{lolId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="zzh.PeopleListOnline.model.LOL">
+    update lol
+    set lol_name = #{lolName,jdbcType=VARCHAR},
+      lol_distrct = #{lolDistrct,jdbcType=VARCHAR},
+      lol_rank = #{lolRank,jdbcType=VARCHAR}
+    where lol_id = #{lolId,jdbcType=VARCHAR}
+  </update>
+  
+  <select id="selectAll" resultMap="BaseResultMap">
+  	SELECT <include refid="Base_Column_List"></include> from lol
+  </select>
+  
+</mapper>
